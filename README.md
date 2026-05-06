@@ -1,7 +1,7 @@
 markdown
 # Delicious Cafe – Student & Manager Portal
 
-A web‑based meal ordering and contract management system for a university cafe.  
+A web‑based meal ordering and contract management system for cafe.  
 Built with **Flask** (backend), **MySQL** (database), and **HTML/CSS/JS** (frontend).
 
 ---

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicious Cafe for noncafeterians</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <div class="close-sidebar" onclick="toggleSidebar()">&times;</div>
+    <ul>
+        <li data-page="home">🏠 Home</li>
+        <li data-page="policy">📜 System Policy</li>
+        <li data-page="howitworks">⚙️ How It Works</li>
+        <li data-page="features">🌟 General Features</li>
+        <li data-page="contact">📞 Contact</li>
+    </ul>
+</div>
+
+<nav>
+    <div style="display: flex; align-items: center;">
+        <div class="hamburger" onclick="toggleSidebar()">
+            <span></span><span></span><span></span>
+        </div>
+        <div><b>Delicious Cafe</b></div>
+    </div>
+    <div class="nav-links" id="navLinks">
+        <a onclick="show('home')">Home</a>
+        <a onclick="show('login')">Student</a>
+        <a onclick="show('managerLogin')">Manager</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div id="home">
+        <h2 style="text-align:center; color:white;">Welcome to Delicious Cafe</h2>
+        <div class="card" style="cursor:pointer;" onclick="show('register')">
+            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+                <div>🔥 Buy Package → Get Free Meals</div>
+                <div>🔥 Discount for new students</div>
+            </div>
+        </div>
+        <div id="infoContent" class="card hidden"></div>
+        <div id="previewTemp" class="card hidden"></div>
+    </div>
+
+    <!-- STUDENT SIGNUP -->
+    <div id="register" class="hidden">
+        <div class="auth-card">
+            <h2>Sign Up</h2>
+            <input id="reg_name" placeholder="Full Name">
+            <input id="reg_email" placeholder="Email">
+            <input id="reg_phone" placeholder="Phone">
+            <input id="reg_pass" placeholder="Password" type="password">
+            <input id="reg_cpass" placeholder="Confirm Password" type="password">
+            <select id="reg_q">
+                <option value="">Select Security Question</option>
+                <option>What is your favorite food?</option>
+                <option>What is your mother's maiden name?</option>
+                <option>What city were you born in?</option>
+            </select>
+            <input id="reg_ans" placeholder="Answer">
+            <button class="auth-btn" onclick="register()">Sign Up</button>
+            <p class="auth-link">Already have an account? <span onclick="show('login')">Sign In</span></p>
+            <p id="reg_msg"></p>
+        </div>
+    </div>
+
+    <!-- STUDENT LOGIN -->
+    <div id="login" class="hidden">
+        <div class="auth-card">
+            <h2>Login</h2>
+            <input id="log_id" placeholder="Student ID">
+            <input id="log_pass" placeholder="Password" type="password">
+            <button class="auth-btn" onclick="login()">Login</button>
+            <p class="auth-link">Don’t have an account? <span onclick="show('register')">Sign Up</span></p>
+            <p class="auth-link"><span onclick="forgotUI()">Forget Password</span></p>
+            <div id="forgotBox" class="hidden" style="margin-top:10px">
+                <p id="qtext"></p>
+                <input id="ans_input" placeholder="Answer">
+                <button onclick="verifySecurityAnswer()">Submit</button>
+                <div id="resetBox" class="hidden" style="margin-top:10px">
+                    <input id="new_pass" placeholder="New Password" type="password">
+                    <input id="re_pass" placeholder="Repeat Password" type="password" onkeyup="checkPasswordMatch()">
+                    <button id="setPassBtn" disabled onclick="saveNewPass()">Set Password</button>
+                </div>
+            </div>
+            <p id="log_msg"></p>
+        </div>
+    </div>
+
+    <!-- STUDENT DASHBOARD -->
+    <div id="student" class="hidden">
+        <div class="card">
+            <div class="dashboard-header" style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 id="welcomeMsg">Student Dashboard</h2>
+            </div>
+            <div class="button-group">
+                <button onclick="toggleStudentInfo()">Your Info</button>
+                <button onclick="toggleStudentBalance()">Balance</button>
+            </div>
+            <div id="studentInfoArea"></div>
+            <div id="studentBalanceArea"></div>
+            <div id="studentMainArea"></div>
+            <div class="logout-bottom">
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MANAGER LOGIN & SIGNUP -->
+    <div id="managerLogin" class="hidden">
+        <div class="auth-card">
+            <h2>Manager Login</h2>
+            <input id="m_username" placeholder="Username">
+            <input id="m_password" placeholder="Password" type="password">
+            <button class="auth-btn" onclick="managerLogin()">Login</button>
+            <p class="auth-link">Don't have an account? <span onclick="showManagerSignup()">Sign Up</span></p>
+            <p class="auth-link"><span onclick="managerForgotUI()">Forget Password</span></p>
+            <div id="managerForgotBox" class="hidden">
+                <p id="m_qtext"></p>
+                <input id="m_ans_input" placeholder="Answer">
+                <button onclick="verifyManagerSecurity()">Submit</button>
+                <div id="m_resetBox" class="hidden">
+                    <input id="m_new_pass" placeholder="New Password" type="password">
+                    <input id="m_re_pass" placeholder="Repeat Password" type="password" onkeyup="checkManagerPasswordMatch()">
+                    <button id="m_setPassBtn" disabled onclick="saveManagerNewPass()">Set Password</button>
+                </div>
+            </div>
+            <p id="m_msg"></p>
+        </div>
+    </div>
+
+    <div id="managerSignup" class="hidden">
+        <div class="auth-card">
+            <h2>Manager Sign Up</h2>
+            <input id="m_fullname" placeholder="Full Name">
+            <input id="m_su_username" placeholder="Username">
+            <input id="m_su_password" placeholder="Password" type="password">
+            <input id="m_phone" placeholder="Phone">
+            <select id="m_q">
+                <option value="">Select Security Question</option>
+                <option>What is your favorite food?</option>
+                <option>What is your mother's maiden name?</option>
+                <option>What city were you born in?</option>
+            </select>
+            <input id="m_ans" placeholder="Answer">
+            <input id="admin_pass" placeholder="Administrator Password" type="password">
+            <button class="auth-btn" onclick="createManagerAccount()">Create Account</button>
+            <p class="auth-link">Already have an account? <span onclick="showManagerLogin()">Login</span></p>
+            <p id="m_signup_msg"></p>
+        </div>
+    </div>
+
+    <!-- MANAGER DASHBOARD -->
+    <div id="manager" class="hidden">
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>Manager Dashboard</h2>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <div class="button-group">
+                <button onclick="toggleManagerInfo()">Your Info</button>
+                <button onclick="showDailySummary()">Daily Summary</button>
+                <button id="adminPageBtn" onclick="showAdminLogin()" class="hidden">Administrator</button>
+                <button id="contractAuditBtn" onclick="showContractAudit()" class="hidden">Contract Audit</button>
+            </div>
+            <div id="managerInfoArea"></div>
+            <div id="dailySummaryArea" class="hidden"></div>
+            <div id="auditArea" class="hidden"></div>
+            <h3>Contract Requests</h3>
+            <div id="contractRequestsTable">Loading...</div>
+            <h3>Orders</h3>
+            <div id="ordersTable">Loading...</div>
+        </div>
+    </div>
+
+    <!-- ADMIN PAGE -->
+    <div id="adminPage" class="hidden">
+        <div class="card">
+            <h2>Admin Panel</h2>
+            <div id="adminContent"></div>
+            <button onclick="backToManagerDashboard()">Back to Manager Page</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Modal for editing student -->
+<div id="editStudentModal" class="modal edit-student-modal" style="display:none;">
+    <div class="modal-content">
+        <h3>Edit Student</h3>
+        <input type="hidden" id="edit_student_id">
+        <input type="text" id="edit_student_name" placeholder="Full Name">
+        <input type="text" id="edit_student_phone" placeholder="Phone">
+        <div class="button-group" style="justify-content:center;">
+            <button onclick="saveStudentEdit()">Save</button>
+            <button onclick="closeEditStudentModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="slideshow-container" id="bgSlideshow"></div>
+<div class="overlay"></div>
+<div id="customModal" class="modal"><div class="modal-content"><p id="modalMsg"></p><button onclick="closeModal()">OK</button></div></div>
+
+<script src="script.js"></script>
+</body>
+</html>

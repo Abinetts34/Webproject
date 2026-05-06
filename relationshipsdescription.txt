@@ -1,0 +1,55 @@
+here are all the relationships in the database sql code!
+
+student_id → references student(student_id)
+A contract belongs to one student. One student can have many contracts.
+
+contract_type_id → references contract_type(contract_type_id)
+A contract belongs to one contract type. One contract type can have many contracts.
+
+mealplanid → references meal_plan(mealplanid)
+A contract belongs to one meal plan. One meal plan can have many contracts.
+
+contract_id → references contract(contract_id)
+A payment belongs to one contract. One contract can have many payments.
+
+student_id → references student(student_id)
+A payment belongs to one student. One student can have many payments.
+
+managerid → references manager(managerid)
+A payment belongs to one manager. One manager can have many payments.
+
+contract_id → references contract(contract_id)
+A contract audit record belongs to one contract. One contract can have many contract audit records.
+
+managerid → references manager(managerid)
+A contract audit record belongs to one manager. One manager can have many contract audit records.
+
+contract_id → references contract(contract_id)
+An order belongs to one contract. One contract can have many orders.
+
+student_id → references student(student_id)
+An order belongs to one student. One student can have many orders.
+
+managerid → references manager(managerid)
+An order belongs to one manager. One manager can have many orders.
+
+mealtype_id → references meal_type(mealtype_id)
+An order belongs to one meal type. One meal type can have many orders.
+
+summary_id → references daily_summary(summary_id) (added via ALTER TABLE)
+An order belongs to one daily summary. One daily summary can have many orders.
+
+order_id → references orders(order_id)
+An order detail belongs to one order. One order can have many order details.
+
+contract_id → references contract(contract_id)
+A student balance record belongs to one contract. One contract can have many student balance records.
+
+student_id → references student(student_id)
+A student balance record belongs to one student. One student can have many student balance records.
+
+managerid → references manager(managerid)
+A daily summary belongs to one manager. One manager can have many daily summaries.
+
+manager_id → references manager(managerid)
+An admin log entry belongs to one manager. One manager can have many admin log entries.

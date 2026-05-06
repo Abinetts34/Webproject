@@ -8,29 +8,23 @@ Built with **Flask** (backend), **MySQL** (database), and **HTML/CSS/JS** (front
 
 ## 📁 Project Structure
 project-root/
-│
-├── backend/
-│ ├── app.py # Flask backend (API routes)
-│ └── requirements.txt # Python dependencies
-│
-├── frontend/
-│ ├── index.html # Main HTML file
-│ ├── style.css # All CSS styles
-│ └── script.js # All JavaScript logic
-│
-├── database/
-│ └── cafe_system.sql # SQL script to create database and tables
-│
-├── images/ # Background images for the slideshow
-│ ├── a.jpg
-│ ├── b.jpg
-│ ├── c.jpg
-│ ├── d.jpg
-│ ├── e.jpg
-│ └── f.jpg
-│
-└── README.md # This file
-
+    backend/
+        app.py # Flask backend (API routes)
+        requirements.txt # Python dependencies
+    frontend/
+        index.html # Main HTML file
+        style.css # All CSS styles
+        script.js # All JavaScript logic
+    database/
+        cafe_system.sql # SQL script to create database and table
+    images/ # Background images for the slideshow
+        a.jpg
+        b.jpg
+        c.jpg
+        d.jpg
+        e.jpg
+        f.jpg
+    README.md # This file
 text
 
 ---

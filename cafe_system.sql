@@ -87,6 +87,14 @@ CREATE TABLE contract_audit (
     FOREIGN KEY (managerid) REFERENCES manager(managerid)
 );
 
+CREATE TABLE daily_summary (
+    summary_id INT PRIMARY KEY AUTO_INCREMENT,
+    summary_date DATE,
+    totalmeal_served INT,
+    managerid INT,
+    FOREIGN KEY (managerid) REFERENCES manager(managerid)
+);
+
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
     mealdate DATE,
@@ -100,7 +108,8 @@ CREATE TABLE orders (
     FOREIGN KEY (contract_id) REFERENCES contract(contract_id),
     FOREIGN KEY (student_id) REFERENCES student(student_id),
     FOREIGN KEY (managerid) REFERENCES manager(managerid),
-    FOREIGN KEY (mealtype_id) REFERENCES meal_type(mealtype_id)
+    FOREIGN KEY (mealtype_id) REFERENCES meal_type(mealtype_id),
+    FOREIGN KEY (summary_id) REFERENCES daily_summary(summary_id)
 );
 
 CREATE TABLE order_detail (
@@ -125,16 +134,6 @@ CREATE TABLE student_balance (
     FOREIGN KEY (contract_id) REFERENCES contract(contract_id),
     FOREIGN KEY (student_id) REFERENCES student(student_id)
 );
-
-CREATE TABLE daily_summary (
-    summary_id INT PRIMARY KEY AUTO_INCREMENT,
-    summary_date DATE,
-    totalmeal_served INT,
-    managerid INT,
-    FOREIGN KEY (managerid) REFERENCES manager(managerid)
-);
-
-ALTER TABLE orders ADD FOREIGN KEY (summary_id) REFERENCES daily_summary(summary_id);
 
 CREATE TABLE admin_log (
     log_id INT PRIMARY KEY AUTO_INCREMENT,

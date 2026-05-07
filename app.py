@@ -15,7 +15,7 @@ def get_db():
         g.db = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="Ab1172",
+            password="Your-Password", #change this
             database="cafe_system",
             ssl_disabled=True,
             use_pure=True,

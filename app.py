@@ -7,9 +7,9 @@ import datetime as dt
 app = Flask(__name__)
 CORS(app)
 
-# =========================
+
 # DATABASE CONNECTION (per request)
-# =========================
+
 def get_db():
     if 'db' not in g:
         g.db = mysql.connector.connect(
@@ -56,9 +56,9 @@ def execute_query(sql, params=None, fetch_one=False, fetch_all=False, commit=Fal
         cursor.close()
         raise e
 
-# =========================
+
 # Helper
-# =========================
+
 def convert_time_to_str(obj):
     if isinstance(obj, dt.timedelta):
         total_seconds = int(obj.total_seconds())
@@ -75,9 +75,9 @@ def convert_time_to_str(obj):
     else:
         return obj
 
-# =========================
+
 # STUDENT SIGNUP
-# =========================
+
 @app.route("/register", methods=["POST"])
 def register():
     data = request.json
@@ -112,9 +112,9 @@ def register():
     student_id = cursor.fetchone()["LAST_INSERT_ID()"]
     return jsonify({"message": "Account created successfully", "student_id": student_id})
 
-# =========================
+
 # STUDENT LOGIN
-# =========================
+
 @app.route("/login", methods=["POST"])
 def login():
     data = request.json
@@ -127,9 +127,9 @@ def login():
     else:
         return jsonify({"message": "ID or password is wrong"}), 401
 
-# =========================
+
 # FORGOT PASSWORD (STUDENT)
-# =========================
+
 @app.route("/forgot_check_id", methods=["POST"])
 def forgot_check_id():
     data = request.json
@@ -159,9 +159,9 @@ def reset_password_with_question():
     execute_query("UPDATE student SET password=%s WHERE student_id=%s", (new_password, student_id), commit=True)
     return jsonify({"message": "Password updated successfully"})
 
-# =========================
+
 # MANAGER CREATE & LOGIN
-# =========================
+
 @app.route("/manager/create", methods=["POST"])
 def create_manager():
     data = request.json
@@ -231,7 +231,7 @@ def manager_reset_password():
     execute_query("UPDATE manager SET password=%s WHERE username=%s", (new_password, username), commit=True)
     return jsonify({"message": "Password updated"})
 
-# ========== STUDENT DASHBOARD ENDPOINTS ==========
+#  STUDENT DASHBOARD ENDPOINTS
 @app.route("/student/info/<int:student_id>", methods=["GET"])
 def student_info(student_id):
     student = execute_query("SELECT student_id, full_name, email, phone, registration_date, status FROM student WHERE student_id=%s", (student_id,), fetch_one=True)
@@ -404,7 +404,7 @@ def cancel_pending_contract(contract_id):
     execute_query("DELETE FROM contract WHERE contract_id=%s", (contract_id,), commit=True)
     return jsonify({"message": "Contract request cancelled"})
 
-# ========== MANAGER DASHBOARD ENDPOINTS ==========
+# MANAGER DASHBOARD ENDPOINTS
 @app.route("/manager/contract_requests", methods=["GET"])
 def contract_requests():
     sql = """
@@ -465,7 +465,6 @@ def decline_contract(contract_id):
     execute_query("DELETE FROM contract WHERE contract_id=%s", (contract_id,), commit=True)
     return jsonify({"message": f"Contract declined and removed. Reason: {reason}"})
 
-# MODIFIED: removed 'serving' status update
 @app.route("/manager/orders", methods=["GET"])
 def manager_orders():
     orders = execute_query("""
@@ -541,7 +540,7 @@ def daily_summary():
         "hourly": hourly if hourly else []
     })
 
-# ========== CONTRACT AUDIT (for admin) ==========
+# CONTRACT AUDIT (for admin)
 @app.route("/manager/contract_audit", methods=["GET"])
 def contract_audit():
     audits = execute_query("""
@@ -551,7 +550,7 @@ def contract_audit():
     """, fetch_all=True)
     return jsonify(audits if audits else [])
 
-# ========== ADMIN ENDPOINTS ==========
+# ADMIN ENDPOINTS
 @app.route("/admin/login", methods=["POST"])
 def admin_login():
     data = request.json
